@@ -1,25 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [shoppingItems, setShoppingItems] = useState([
+    { text: '5 eggs', done: false },
+    { text: '1 heirloom tomato', done: false },
+    { text: '1 gallon of milk', done: false }
+  ])
+
+  const toggleDone = (index) => {
+    const oldItems = [...shoppingItems];
+    oldItems[index].done = !oldItems[index].done;
+    setShoppingItems(oldItems)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 style={{ color: "MediumSlateBlue" }}>My shopping list</h1>
+      <ul style={{ width: 500, margin: "auto", textAlign: "left", listStyleType: "none" }}>
+        {shoppingItems.sort((a, b) => a.done - b.done).map((item, index) =>
+          <ShoppingItem
+            text={item.text}
+            done={item.done}
+            toggleDone={() => toggleDone(index)}
+          />)}
+      </ul>
     </div>
   );
+}
+
+function ShoppingItem(props) {
+  return (<li style={{ marginTop: 10 }}>
+    <div style={{
+      display: "inline-block", width: 20, height: 20, marginBottom: -5, marginRight: 5, borderRadius: "50%", border: "2px solid MediumSlateBlue",
+      background: props.done ? "MediumSlateBlue" : "none"
+    }}
+      onClick={props.toggleDone}
+    />
+    { props.done ? <strike>{props.text}</strike> : props.text}
+  </li>)
 }
 
 export default App;
