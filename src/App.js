@@ -9,9 +9,9 @@ function App() {
   ])
 
   const toggleDone = (index) => {
-    const oldItems = [...shoppingItems];
-    oldItems[index].done = !oldItems[index].done;
-    setShoppingItems(oldItems)
+    const newItems = [...shoppingItems];
+    newItems[index].done = !newItems[index].done;
+    setShoppingItems(newItems)
   }
 
   return (
